@@ -7,19 +7,17 @@ router.get("/", async (req, res) => {
 	res.json(await service.buscar());
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const producto = await service.buscarId(id);
 		res.json(producto);
 	} catch (error) {
-		res.status(404).json({
-			message: error,
-		});
+		  next(error);
 	};
 });
 
-	router.post("/crear", async (req, res) => {
+	router.post("/crear", async (req, res, next) => {
 		try {
 			const body = req.body;
 			const producto = await service.crear(body);
@@ -28,13 +26,11 @@ router.get("/:id", async (req, res) => {
 				producto,
 			});
 		} catch (error) {
-				res.status(404).json({
-					message: error,
-				});
+        next(error);
 		};
 	});
 
-	router.put("/:id", async (req, res) => {
+	router.put("/:id", async (req, res, next) => {
 		try {
 			const { id } = req.params;
 			const body = req.body;
@@ -44,13 +40,11 @@ router.get("/:id", async (req, res) => {
 				producto,
 			});
 		} catch (error) {
-			res.status(404).json({
-				message: error,
-			});
+			  next(error);
 		};
 	});
 
-	router.patch("/:id/:propiedad", async (req, res) => {
+	router.patch("/:id/:propiedad", async (req, res, next) => {
 		try {
 			const { id, propiedad } = req.params;
 			const body =  req.body;
@@ -60,13 +54,11 @@ router.get("/:id", async (req, res) => {
 				producto,
 			});
 		} catch (error) {
-			res.status(404).json({
-				meesage: error,
-			});
+			  next(error);
 		};
 	});
 
-	router.delete("/:id", async (req, res) => {
+	router.delete("/:id", async (req, res, next) => {
 		try {
 			const { id } = req.params;
 			const producto = await service.eliminar(id);
@@ -75,9 +67,7 @@ router.get("/:id", async (req, res) => {
 				producto,
 			});
 		} catch (error) {
-				res.status(404).json({
-					meesage: error,
-				});
+        next(error);
 		};
 	});
 
