@@ -45,15 +45,6 @@ class productosService {
 		return this.productos[index];
   };
 
-  async modificarAtributo(id, propiedad, body) {
-		const index = this.productos.findIndex(index => index.id == id);
-		if (index == -1 || !this.productos[index][`${propiedad}`]) {
-			throw boom.notFound(`El producto o el atributo seleccionado no existe`);
-		};
-		this.productos[index][`${propiedad}`] = body;
-		return this.productos[index];
-	};
-
   async eliminar(id) {
 		const index = this.productos.findIndex(index => index.id == id);
 		if (index == -1) {
